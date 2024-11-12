@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Plotly JS -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 class="dashboard-title">Data Visualization Dashboard</h1>
+
+
+        <!-- Filter Section with Additional Controls -->
+        <div class="row justify-content-center mb-4">
+
+            <!-- Topic Filter -->
+            <div class="col-md-2">
+                <select id="topic" class="form-select">
+                    <option value="">Select Topic</option>
+                    <option value="oil">🛢 Oil</option>
+                    <option value="gas">⛽ Gas</option>
+                    <option value="consumption">📊 Consumption</option>
+                    <option value="market">📈 Market</option>
+                    <option value="gdp">💰 GDP</option>
+                    <option value="war">⚔ War</option>
+                    <option value="production">🏭 Production</option>
+                    <option value="export">📦 Export</option>
+                    <option value="battery">🔋 Battery</option>
+                    <option value="biofuel">🌱 Biofuel</option>
+                    <option value="policy">📜 Policy</option>
+                    <option value="economy">🏦 Economy</option>
+                    <option value="strategy">📐 Strategy</option>
+                    <option value="robot">🤖 Robot</option>
+                    <option value="growth">🌱 Growth</option>
+                    <option value="energy">⚡ Energy</option>
+                    <option value="economic">💹 Economic</option>
+                    <option value="food">🍲 Food</option>
+                    <option value="unemployment">📉 Unemployment</option>
+                    <option value="administration">🏢 Administration</option>
+                    <option value="trade">🔄 Trade</option>
+                    <option value="demand">📊 Demand</option>
+                    <option value="economic growth">📈 Economic Growth</option>
+                    <option value="industry">🏭 Industry</option>
+                    <option value="capital">💰 Capital</option>
+                </select>
+            </div>
+
+            <!-- Region Filter -->
+            <div class="col-md-2">
+                <select id="region" class="form-select">
+                    <option value="">Select Region</option>
+                    <option value="">None</option>
+                    <option value="Northern America">🌎 Northern America</option>
+                    <option value="Central America">🌍 Central America</option>
+                    <option value="World">🌐 World</option>
+                    <option value="Western Africa">🌍 Western Africa</option>
+                    <option value="Western Asia">🌏 Western Asia</option>
+                    <option value="Eastern Europe">🌍 Eastern Europe</option>
+                    <option value="Southern Asia">🌏 Southern Asia</option>
+                    <option value="Southern Africa">🌍 Southern Africa</option>
+                    <option value="Eastern Asia">🌏 Eastern Asia</option>
+                    <option value="South America">🌎 South America</option>
+                    <option value="South-Eastern Asia">🌏 South-Eastern Asia</option>
+                    <option value="Europe">🌍 Europe</option>
+                    <option value="Oceania">🌊 Oceania</option>
+                    <option value="Africa">🌍 Africa</option>
+                </select>
+            </div>
+
+            <!-- PEST Filter -->
+            <div class="col-md-2">
+                <select id="pestle" class="form-select">
+                    <option value="">Select PEST</option>
+                    <option value="Industries">🏢 Industries</option>
+                    <option value="Environmental">🌳 Environmental</option>
+                    <option value="Political">🏛 Political</option>
+                    <option value="Economic">💰 Economic</option>
+                    <option value="Organization">🏢 Organization</option>
+                    <option value="Healthcare">🏥 Healthcare</option>
+                    <option value="Lifestyles">🧘‍♂️ Lifestyles</option>
+                    <option value="Social">👥 Social</option>
+                    <option value="Technological">💻 Technological</option>
+                </select>
+            </div>
+
+            <!-- Source Filter -->
+            <div class="col-md-2">
+                <select id="source" class="form-select">
+                    <option value="">Select Source</option>
+                    <option value="EIA">📊 EIA</option>
+                    <option value="sustainablebrands.com">🌱 Sustainable Brands</option>
+                    <option value="SBWire">📰 SBWire</option>
+                    <option value="CleanTechnica">⚙️ CleanTechnica</option>
+                    <option value="TRAC News">🗞 TRAC News</option>
+                    <option value="Vanguard News">📰 Vanguard News</option>
+                    <option value="Avi Melamed">🧑‍🏫 Avi Melamed</option>
+                    <option value="WSJ">📰 WSJ</option>
+                    <option value="DOE EIA 2013 Energy Conference">DOE EIA 2013 Energy Conference</option>
+                    <option value="Reuters">📰 Reuters</option>
+                    <option value="Star Tribune">📰 Star Tribune</option>
+                    <option value="EV Obsession">🚗 EV Obsession</option>
+                    <option value="creamermedia">📰 Creamermedia</option>
+                    <option value="Resilience">🏗 Resilience</option>
+                    <option value="TheNews.NG">📰 TheNews.NG</option>
+                </select>
+            </div>
+
+            <!-- Country Filter -->
+            <div class="col-md-2">
+                <select id="country" class="form-select">
+                    <option value="">Select Country</option>
+                    <option value="">None</option>
+                    <option value="United States of America">🇺🇸 America</option>
+                    <option value="Mexico">🇲🇽 Mexico</option>
+                    <option value="Nigeria">🇳🇬 Nigeria</option>
+                    <option value="Lebanon">🇱🇧 Lebanon</option>
+                    <option value="Russia">🇷🇺 Russia</option>
+                    <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                    <option value="Angola">🇦🇴 Angola</option>
+                    <option value="Egypt">🇪🇬 Egypt</option>
+                    <option value="South Africa">🇿🇦 South Africa</option>
+                    <option value="India">🇮🇳 India</option>
+                    <option value="China"> China</option>
+                    <option value="Iran"> Iran</option>
+                </select>
+            </div>
+
+            <!-- Sector Filter -->
+            <div class="col-md-2">
+                <select id="sector" class="form-select">
+                    <option value="">Select Sector</option>
+                    <option value="Energy">⚡ Energy</option>
+                    <option value="Environment">🌳 Environment</option>
+                    <option value="Government">🏛 Government</option>
+                    <option value="Aerospace & defence">✈ Aerospace & Defence</option>
+                    <option value="Manufacturing">🏭 Manufacturing</option>
+                    <option value="Retail">🛍 Retail</option>
+                    <option value="Financial services">💳 Financial Services</option>
+                    <option value="Support services">📋 Support Services</option>
+                    <option value="Information Technology">💻 Information Technology</option>
+                    <option value="Healthcare">🏥 Healthcare</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-between mb-4">
+            <div class="col-md-2">
+                <select id="endYear" class="form-control">
+                    <option value="" disabled selected>📅 Select End Year</option>
+                    <option value="">None</option>
+                    <!-- Hardcoded year options -->
+                    {% for year in range(2000, 2061) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Filter Button (Right Side) -->
+            <div class="col-md-2">
+                <button id="filterBtn" class="btn btn-primary w-100">🔍 Apply Filters</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Chart Section -->
+    <div class="row">
+        <div class="col-md-6">
+            <div id="intensity-chart"></div> <!-- Intensity Chart -->
+        </div>
+        <div class="col-md-6">
+            <div id="3d-likelihood-chart"></div> <!-- 3D Likelihood Chart -->
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div id="country-bar-chart"></div> <!-- Country Bar Chart -->
+        </div>
+        <div class="col-md-6">
+            <div id="region-bar-chart"></div> <!-- Region Bar Chart -->
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div id="sector-bar-chart"></div> <!-- Sector Bar Chart -->
+        </div>
+        <div class="col-md-6">
+            <div id="swot-pie-chart"></div> <!-- SWOT Pie Chart -->
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="d-none text-center my-4">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+
+</html>
